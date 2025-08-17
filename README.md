@@ -107,11 +107,5 @@ bot.run()
 - Provides a **clear project structure** for understanding AI chatbot integration.
 - Saves time with **automated setup** and environment configuration.
 
----
-
-## Demo
-
-
-
 
 Happy Chatbot Building! 🎉
