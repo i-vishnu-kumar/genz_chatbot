@@ -154,24 +154,20 @@ class ChatBot:
         print("Creating virtual environment...")
         subprocess.check_call([sys.executable, "-m", "venv", os.path.join(self.base_dir, "venv")])
 
-        # Activate the virtual environment based on the operating system (Windows or non-Windows)
-        activate_script = os.path.join(self.base_dir, "venv", "Scripts", "activate") if platform.system() == 'Windows' else os.path.join(self.base_dir, "venv", "bin", "activate")
+        # Figure out the correct paths for Python and pip inside the venv
+        if platform.system() == "Windows":
+            python_exec = os.path.join(self.base_dir, "venv", "Scripts", "python.exe")
+            pip_exec = os.path.join(self.base_dir, "venv", "Scripts", "pip.exe")
+        else:  # macOS / Linux
+            python_exec = os.path.join(self.base_dir, "venv", "bin", "python")
+            pip_exec = os.path.join(self.base_dir, "venv", "bin", "pip")
 
-        print("Activating the virtual environment...")
-        activate_command = f"source {activate_script}" if platform.system() != 'Windows' else f"{activate_script}"
-
-        if platform.system() != 'Windows':
-            subprocess.check_call(activate_command, shell=True)  
-        else:
-            subprocess.check_call(f"{activate_script}", shell=True)  
-
-        # Install the dependencies from the requirements.txt file
+        # Install the dependencies
         print("Installing dependencies...")
-        subprocess.check_call([os.path.join(self.base_dir, "venv", "Scripts", "pip" if platform.system() == 'Windows' else "pip"), "install", "-r", os.path.join(self.base_dir, "requirements.txt")])
+        subprocess.check_call([pip_exec, "install", "-r", os.path.join(self.base_dir, "requirements.txt")])
 
         # Run the Flask application
         print("Running the app...")
-        subprocess.check_call([os.path.join(self.base_dir, "venv", "Scripts", "python" if platform.system() == 'Windows' else "python"), os.path.join(self.base_dir, "Backend", "app.py")])
+        subprocess.check_call([python_exec, os.path.join(self.base_dir, "Backend", "app.py")])
 
-        # Output success message
         print("Bot is running successfully!")
