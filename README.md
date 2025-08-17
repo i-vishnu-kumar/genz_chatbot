@@ -25,7 +25,7 @@ Welcome to **GenZBot**, the ultimate package designed to help beginners build AI
 
 1. Install GenZBot using pip:
    ```bash
-   pip install GenZBot
+   pip install genZ-Chatbot
    ```
 
 2. Import the `ChatBot` class:
